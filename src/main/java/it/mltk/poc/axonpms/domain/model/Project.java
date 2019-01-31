@@ -1,7 +1,9 @@
 package it.mltk.poc.axonpms.domain.model;
 
 import it.mltk.poc.axonpms.delivery.command.InitializeProjectCommand;
+import it.mltk.poc.axonpms.delivery.command.RenameProjectCommand;
 import it.mltk.poc.axonpms.domain.event.ProjectInitializedEvent;
+import it.mltk.poc.axonpms.domain.event.ProjectRenamedEvent;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.axonframework.commandhandling.CommandHandler;
@@ -20,7 +22,6 @@ public class Project {
 
     @AggregateIdentifier
     private UUID uuid;
-
     private String name;
 
 //    @AggregateMember
@@ -29,13 +30,25 @@ public class Project {
     @CommandHandler
     public Project(final InitializeProjectCommand command) {
         Assert.hasLength(command.getUuid().toString(), "Missing UUID");
-
         AggregateLifecycle.apply(new ProjectInitializedEvent(command.getUuid()));
     }
 
+    @CommandHandler
+    public Project handle(final RenameProjectCommand command) {
+        Assert.hasLength(command.getUuid().toString(), "Missing UUID");
+        Assert.hasLength(command.getNewName(), "Missing newName");
+        AggregateLifecycle.apply(new ProjectRenamedEvent(command.getUuid(), command.getNewName()));
+        return this;
+    }
+
     @EventSourcingHandler
-    private void on(ProjectInitializedEvent event) {
+    public void on(ProjectInitializedEvent event) {
         this.uuid = event.getUuid();
+        this.name = event.getName();
+    }
+
+    @EventSourcingHandler
+    public void on(ProjectRenamedEvent event) {
         this.name = event.getName();
     }
 }

@@ -1,3 +1,6 @@
+logging.level:
+  it.mltk.poc.axonpms: DEBUG
+
 server.port: 8080
 
 spring:
