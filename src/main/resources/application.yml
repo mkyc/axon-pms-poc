@@ -13,6 +13,6 @@ spring:
     driver-class-name: org.h2.Driver
   jpa:
     properties.hibernate:
-      show_sql: true
-      format_sql: true
-    show-sql: true
+      show_sql: false
+      format_sql: false
+    show-sql: false

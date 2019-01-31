@@ -1,12 +1,12 @@
-package it.mltk.poc.axonpms.domain.command;
+package it.mltk.poc.axonpms.delivery.command;
 
-import lombok.Data;
+import lombok.Value;
 import org.axonframework.modelling.command.TargetAggregateIdentifier;
 
 import java.util.UUID;
 
-@Data
-public class InitializeProject {
+@Value
+public class InitializeProjectCommand {
     @TargetAggregateIdentifier
     private final UUID uuid;
 }
