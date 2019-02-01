@@ -5,7 +5,8 @@ import lombok.Value;
 import java.util.UUID;
 
 @Value
-public class ProjectInitializedEvent {
+public class TaskInitializedEvent {
     UUID projectUuid;
-    String name = "New Project";
+    UUID taskUuid;
+    String name = "New Task";
 }

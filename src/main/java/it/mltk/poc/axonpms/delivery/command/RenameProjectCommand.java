@@ -8,6 +8,6 @@ import java.util.UUID;
 @Value
 public class RenameProjectCommand {
     @TargetAggregateIdentifier
-    UUID uuid;
+    UUID projectUuid;
     String newName;
 }

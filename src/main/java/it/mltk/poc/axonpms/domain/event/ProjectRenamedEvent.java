@@ -6,6 +6,6 @@ import java.util.UUID;
 
 @Value
 public class ProjectRenamedEvent {
-    UUID uuid;
+    UUID projectUuid;
     String name;
 }
