@@ -1,5 +1,6 @@
 logging.level:
   it.mltk.poc.axonpms: DEBUG
+  it.mltk.poc.axonpms.delivery: TRACE
 #  org.hibernate.SQL: DEBUG
 #  org.hibernate.type.descriptor.sql.BasicBinder: TRACE
 
@@ -16,8 +17,3 @@ spring:
     username: sa
     password:
     driver-class-name: org.h2.Driver
-  jpa:
-    properties.hibernate:
-      show_sql: false
-      format_sql: false
-    show-sql: false

@@ -2,10 +2,8 @@ package it.mltk.poc.axonpms.delivery.controller;
 
 import it.mltk.poc.axonpms.delivery.command.InitializeProjectCommand;
 import it.mltk.poc.axonpms.delivery.command.RenameProjectCommand;
-import it.mltk.poc.axonpms.domain.model.Project;
-import it.mltk.poc.axonpms.domain.projection.ProjectProjection;
 import it.mltk.poc.axonpms.delivery.query.GetOneProjectQuery;
-import lombok.extern.slf4j.Slf4j;
+import it.mltk.poc.axonpms.domain.projection.ProjectProjection;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.axonframework.messaging.responsetypes.ResponseTypes;
 import org.axonframework.queryhandling.QueryGateway;
@@ -17,7 +15,6 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/projects")
-@Slf4j
 public class ProjectController {
 
     private final CommandGateway commandGateway;
@@ -59,8 +56,7 @@ public class ProjectController {
             @PathVariable("projectUuid") String projectUuid,
             @RequestParam("newName") final String newName,
             UriComponentsBuilder uriComponentsBuilder) {
-        Project project = commandGateway.sendAndWait(new RenameProjectCommand(UUID.fromString(projectUuid), newName));
-        log.debug("renamed Project = " + project);
+        commandGateway.sendAndWait(new RenameProjectCommand(UUID.fromString(projectUuid), newName));
         return ResponseEntity
                 .created(uriComponentsBuilder
                         .path("/projects/{projectUuid}")
