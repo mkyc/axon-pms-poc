@@ -1,5 +1,6 @@
 package it.mltk.poc.axonpms.infrastructure.persistence.denormalizer;
 
+import it.mltk.poc.axonpms.domain.event.ProjectDeletedEvent;
 import it.mltk.poc.axonpms.domain.event.ProjectInitializedEvent;
 import it.mltk.poc.axonpms.domain.event.ProjectRenamedEvent;
 import it.mltk.poc.axonpms.domain.event.TaskInitializedEvent;
@@ -44,5 +45,10 @@ public class ProjectProjectionDenormalizer {
         TaskProjection taskProjection = taskProjectionRepository.save(new TaskProjection(event.getTaskUuid(), event.getName(), projectProjection));
         projectProjection.addTask(taskProjection);
         projectProjectionRepository.save(projectProjection);
+    }
+
+    @EventHandler
+    public void on(ProjectDeletedEvent event) {
+        projectProjectionRepository.deleteById(event.getProjectUuid());
     }
 }

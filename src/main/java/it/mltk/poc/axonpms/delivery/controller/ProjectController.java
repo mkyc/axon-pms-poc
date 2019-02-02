@@ -1,12 +1,15 @@
 package it.mltk.poc.axonpms.delivery.controller;
 
+import it.mltk.poc.axonpms.delivery.command.DeleteProjectCommand;
 import it.mltk.poc.axonpms.delivery.command.InitializeProjectCommand;
 import it.mltk.poc.axonpms.delivery.command.RenameProjectCommand;
 import it.mltk.poc.axonpms.delivery.query.GetOneProjectQuery;
 import it.mltk.poc.axonpms.domain.projection.ProjectProjection;
 import org.axonframework.commandhandling.gateway.CommandGateway;
+import org.axonframework.eventsourcing.AggregateDeletedException;
 import org.axonframework.messaging.responsetypes.ResponseTypes;
 import org.axonframework.queryhandling.QueryGateway;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -63,5 +66,19 @@ public class ProjectController {
                         .buildAndExpand(projectUuid)
                         .toUri())
                 .build();
+    }
+
+    @DeleteMapping("/{projectUuid}")
+    public ResponseEntity deleteProject(
+            @PathVariable("projectUuid") String projectUuid
+    ) {
+        return ResponseEntity
+                .ok(commandGateway.sendAndWait(new DeleteProjectCommand(UUID.fromString(projectUuid)))
+                );
+    }
+
+    @ExceptionHandler(AggregateDeletedException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public void notFound() {
     }
 }

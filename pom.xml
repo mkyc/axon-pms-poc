@@ -43,12 +43,6 @@
 			<groupId>org.axonframework</groupId>
 			<artifactId>axon-spring-boot-starter</artifactId>
 			<version>4.0.3</version>
-		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.axonframework/axon-spring-boot-autoconfigure -->
-		<dependency>
-			<groupId>org.axonframework</groupId>
-			<artifactId>axon-spring-boot-autoconfigure</artifactId>
-			<version>4.0.3</version>
 			<exclusions>
 				<exclusion>
 					<groupId>org.axonframework</groupId>
